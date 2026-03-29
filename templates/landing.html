@@ -26,7 +26,7 @@
 
         <div class="hero-v2-actions">
             <a href="{{ url_for('register') }}" class="hero-v2-btn">Create free account</a>
-            <a href="{{ url_for('login') }}" class="hero-v2-btn">See how it works</a>
+            <button type="button" class="hero-v2-btn hero-v2-btn-ghost" id="openModal">See how it works</button>
         </div>
 
         <div class="hero-v2-mock">
@@ -109,4 +109,55 @@
     </div>
 </section>
 
+<!-- Video Modal -->
+<div id="videoModal" class="modal-overlay">
+    <div class="modal-container">
+        <button class="modal-close" id="closeModal" aria-label="Close">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+        <div class="modal-video-wrapper">
+            <iframe id="videoFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+(function() {
+    var modal = document.getElementById('videoModal');
+    var openBtn = document.getElementById('openModal');
+    var closeBtn = document.getElementById('closeModal');
+    var iframe = document.getElementById('videoFrame');
+    var VIDEO_URL = 'https://www.youtube.com/embed/dQw4w9WgXcQ';
+
+    openBtn.addEventListener('click', function() {
+        iframe.src = VIDEO_URL + '?autoplay=1&rel=0';
+        modal.classList.add('modal-visible');
+        document.body.style.overflow = 'hidden';
+    });
+
+    function hideModal() {
+        iframe.src = '';
+        modal.classList.remove('modal-visible');
+        document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', hideModal);
+
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            hideModal();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('modal-visible')) {
+            hideModal();
+        }
+    });
+})();
+</script>
+{% endblock %}
 {% endblock %}
