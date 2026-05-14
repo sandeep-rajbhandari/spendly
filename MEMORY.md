@@ -1,0 +1,1 @@
+- [Currency convention change](memory/currency_inr_update.md) — expense tracking currency is INR, not USD
