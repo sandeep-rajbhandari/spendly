@@ -65,7 +65,7 @@ def login():
 
         session["user_id"]   = user["id"]
         session["user_name"] = user["name"]
-        return redirect(url_for("landing"))
+        return redirect(url_for("profile"))
 
     return render_template("login.html")
 
@@ -82,7 +82,42 @@ def logout():
 
 @app.route("/profile")
 def profile():
-    return "Profile page — coming in Step 4"
+    if not session.get("user_id"):
+        return redirect(url_for("login"))
+
+    user = {
+        "name": "Alex Rivera",
+        "email": "alex@example.com",
+        "member_since": "January 2024",
+        "initials": "AR",
+    }
+    stats = {
+        "total_spent": "₹24,850",
+        "transaction_count": 47,
+        "top_category": "Food & Dining",
+    }
+    transactions = [
+        {"date": "May 15, 2025", "description": "Swiggy",              "category": "Food & Dining",  "slug": "food",          "amount": "₹340"},
+        {"date": "May 14, 2025", "description": "Metro Card Recharge", "category": "Transport",       "slug": "transport",     "amount": "₹500"},
+        {"date": "May 13, 2025", "description": "Netflix",             "category": "Entertainment",   "slug": "entertainment", "amount": "₹649"},
+        {"date": "May 12, 2025", "description": "D-Mart Groceries",    "category": "Groceries",       "slug": "groceries",     "amount": "₹1,200"},
+        {"date": "May 10, 2025", "description": "Gym Membership",      "category": "Health",          "slug": "health",        "amount": "₹2,000"},
+    ]
+    categories = [
+        {"name": "Food & Dining",  "amount": "₹8,400", "pct": 34},
+        {"name": "Transport",      "amount": "₹3,200", "pct": 13},
+        {"name": "Entertainment",  "amount": "₹2,800", "pct": 11},
+        {"name": "Groceries",      "amount": "₹5,600", "pct": 23},
+        {"name": "Health",         "amount": "₹4,850", "pct": 19},
+    ]
+
+    return render_template(
+        "profile.html",
+        user=user,
+        stats=stats,
+        transactions=transactions,
+        categories=categories,
+    )
 
 
 @app.route("/expenses/add")

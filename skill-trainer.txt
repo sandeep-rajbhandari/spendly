@@ -1,0 +1,65 @@
+Skill Name
+
+Frontend UI Designer for Spendly (a personal expense tracker) -
+https://github.com/campusx-official/spendly
+
+🎯 What this skill does
+
+Generates modern, production-ready UI components/pages for the Spendly expense tracker.
+
+Clean, responsive design
+Consistent with existing design
+Uses meaningful icons
+Focus on usability + clarity
+
+When it should trigger
+
+Automatically trigger when user says things like:
+
+“Design the ___ page”
+“Create UI for ___”
+“Build component for ___”
+“Redesign / improve ___”
+
+Especially for Spendly-related UI
+
+Inputs
+
+Page/component name
+Optional: constraints, data, references
+Output should include
+
+1. Ul Structure (brief)
+
+Layout + key sections
+Important UX decisions
+
+1. Code
+
+Clean CSS
+Modular components
+Minimal boilerplate
+
+1. Design Quality
+
+Modern SaaS look
+Good spacing & hierarchy
+Card-based layout
+Subtle colors + shadows
+
+1. Icons
+
+Use Lucide / Heroicons where relevant
+
+Design Rules
+Minimal, clean fintech-style UI Rounded corners, soft shadows
+Consistent spacing (8px grid)
+Avoid clutter or random styles
+
+Consistency Rule
+Match existing project design
+If unclear → ask for photos of the existing design
+
+X Avoid
+Generic/dated Ul
+Unstructured code dumps
