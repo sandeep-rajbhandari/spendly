@@ -86,3 +86,72 @@ def get_user_by_email(email):
     ).fetchone()
     conn.close()
     return user
+
+
+def get_user_by_id(user_id):
+    conn = get_db()
+    user = conn.execute(
+        "SELECT * FROM users WHERE id = ?", (user_id,)
+    ).fetchone()
+    conn.close()
+    return user
+
+
+def get_expenses_for_user(user_id):
+    conn = get_db()
+    rows = conn.execute(
+        """
+        SELECT id, amount, category, date, description
+        FROM expenses
+        WHERE user_id = ?
+        ORDER BY date DESC, id DESC
+        """,
+        (user_id,),
+    ).fetchall()
+    conn.close()
+    return rows
+
+
+def get_expense_summary(user_id):
+    conn = get_db()
+    totals = conn.execute(
+        """
+        SELECT COUNT(*) AS count, COALESCE(SUM(amount), 0) AS total
+        FROM expenses
+        WHERE user_id = ?
+        """,
+        (user_id,),
+    ).fetchone()
+    top = conn.execute(
+        """
+        SELECT category
+        FROM expenses
+        WHERE user_id = ?
+        GROUP BY category
+        ORDER BY SUM(amount) DESC
+        LIMIT 1
+        """,
+        (user_id,),
+    ).fetchone()
+    conn.close()
+    return {
+        "count": totals["count"],
+        "total": totals["total"],
+        "top_category": top["category"] if top else None,
+    }
+
+
+def get_category_totals(user_id):
+    conn = get_db()
+    rows = conn.execute(
+        """
+        SELECT category, SUM(amount) AS amount
+        FROM expenses
+        WHERE user_id = ?
+        GROUP BY category
+        ORDER BY amount DESC
+        """,
+        (user_id,),
+    ).fetchall()
+    conn.close()
+    return rows
